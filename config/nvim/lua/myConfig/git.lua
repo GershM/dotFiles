@@ -1,4 +1,4 @@
-vim.g.gitblame_display_virtual_text = 0
+vim.g.gitblame_display_virtual_text = 1
 
 require('gitsigns').setup {
   signs = {

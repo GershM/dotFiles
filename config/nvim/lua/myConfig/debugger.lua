@@ -1,28 +1,45 @@
 local dap, dapui = require("dap"), require("dapui")
-local lspDir = "/Users/gershmirson/lsp"
+local lspDir = os.getenv('HOME') .. "/lsp"
+
+
+local function clearNamespace()
+    local bufnr = vim.api.nvim_get_current_buf()
+    local ns = vim.api.nvim_create_namespace("nvim-dap-virtual-text")
+    vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
+end
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
     dapui.open()
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close()
+    --dapui.close()
+    clearNamespace()
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close()
+    --dapui.close()
+    clearNamespace()
 end
 
 -- Chrome Debugger
 require("dap-vscode-js").setup({
-    -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
-    --debugger_path = lspDir .. "/vscode-js-debug", -- Path to vscode-js-debug installation.
-    --debugger_cmd = { "js-debug-adapter" }, -- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
     adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' }, -- which adapters to register in nvim-dap
-    -- log_file_path = "(stdpath cache)/dap_vscode_js.log" -- Path for file logging
-    -- log_file_level = false -- Logging level for output to file. Set to false to disable file logging.
-    --log_console_level = vim.log.levels.ERROR -- Logging level for output to console. Set to false to disable console output.
 })
+
 for _, language in ipairs({ "typescript", "javascript", "javascriptreact", "typescriptreact" }) do
     require("dap").configurations[language] = {
+        {
+            type = "pwa-node",
+            request = "launch",
+            name = "Launch file",
+            program = "${file}",
+            cwd = "${workspaceFolder}",
+            sourceMaps = true,
+            resolveSourceMapLocations = {
+                "${workspaceFolder}/client/**",
+                "!${workspaceFolder}/node_modules/**"
+            },
+
+        },
         {
             type = "pwa-chrome",
             name = "Chrome Launch",
@@ -30,7 +47,6 @@ for _, language in ipairs({ "typescript", "javascript", "javascriptreact", "type
             url = "https://localhost",
             sourceMaps = true,
             disableNetworkCache = true,
-            log = true,
             userDataDir = false,
             webRoot = "${workspaceFolder}/client",
             resolveSourceMapLocations = {
@@ -41,8 +57,6 @@ for _, language in ipairs({ "typescript", "javascript", "javascriptreact", "type
                 ["webpack:///./~/*"] = "${workspaceFolder}/node_modules/*",
                 ["webpack:///*"] = "${webRoot}/*",
             },
-            runtimeArgs = {
-            }
         }
     }
 end
@@ -92,6 +106,46 @@ dap.configurations.php = {
     --}
 }
 
+-- Installation:  https://github.com/mfussenegger/nvim-dap-python
+require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+dap.configurations.python = {
+    {
+        -- The first three options are required by nvim-dap
+        type = 'python'; -- the type here established the link to the adapter definition: `dap.adapters.python`
+        request = 'launch';
+        name = "Launch file";
+        program = "${file}"; -- This configuration will launch the current file if used.
+    },
+}
+dap.adapters.bashdb = {
+    type = 'executable',
+    command = 'node' ,
+    args = { lspDir .. '/vscode-bash-debug/out/bashDebug.js' }
+}
+
+dap.configurations.sh = {
+    {
+        type = 'bashdb';
+        request = 'launch';
+        name = "Launch file";
+        showDebugOutput = true;
+        pathBashdb = lspDir .. '/vscode-bash-debug/bashdb_dir/bashdb';
+        pathBashdbLib = lspDir .. '/vscode-bash-debug/bashdb_dir';
+        trace = true;
+        logs = true;
+        file = "${file}";
+        program = "${file}";
+        cwd = '${workspaceFolder}';
+        pathCat = "cat";
+        pathBash = "/opt/homebrew/bin/bash";
+        pathMkfifo = "mkfifo";
+        pathPkill = "pkill";
+        args = {};
+        env = {};
+        terminalKind = "integrated";
+    }
+}
+
 dapui.setup({
     icons = { expanded = "", collapsed = "", current_frame = "" },
     mappings = {
@@ -114,7 +168,7 @@ dapui.setup({
         {
             elements = {
                 "repl",
-                "console",
+                --"console", -- Not clear Y I need it.
             },
             size = 0.25, -- 25% of total lines
             position = "bottom",
@@ -124,7 +178,7 @@ dapui.setup({
                 "breakpoints",
                 "stacks",
             },
-            size = 40, -- 40 columns
+            size = 40,
             position = "left",
         },
         {
@@ -171,11 +225,11 @@ require("nvim-dap-virtual-text").setup({
     enabled = true, -- enable this plugin (the default)
     enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
     highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
-    highlight_new_as_changed = false, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
+    highlight_new_as_changed = true, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
     show_stop_reason = true, -- show stop reason when stopped for exceptions
     commented = false, -- prefix virtual text with comment string
     only_first_definition = true, -- only show virtual text at first definition (if there are multiple)
-    all_references = false, -- show virtual text on all all references of the variable (not only definitions)
+    all_references = true, -- show virtual text on all all references of the variable (not only definitions)
     display_callback = function(variable, _buf, _stackframe, _node)
         return variable.name .. ' = ' .. variable.value
     end,
@@ -183,6 +237,6 @@ require("nvim-dap-virtual-text").setup({
     virt_text_pos = 'eol', -- position of virtual text, see `:h nvim_buf_set_extmark()`
     all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
     virt_lines = false, -- show virtual lines instead of virtual text (will flicker!)
-    virt_text_win_col = nil -- position the virtual text at a fixed window column (starting from the first text column) ,
+    virt_text_win_col = 80 -- position the virtual text at a fixed window column (starting from the first text column) ,
     -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
 })

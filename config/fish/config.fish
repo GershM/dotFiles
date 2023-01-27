@@ -43,3 +43,5 @@ alias mv='mv -i'
 alias rm='rm -i'
 
 starship init fish | source
+
+source /Users/gershmirson/.docker/init-fish.sh || true # Added by Docker Desktop

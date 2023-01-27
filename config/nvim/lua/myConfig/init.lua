@@ -7,6 +7,7 @@ require("myConfig.debugger")
 require("myConfig.git")
 require("myConfig.colorizer")
 require("myConfig.neotest")
+require("myConfig.neorg")
 
 vim.cmd.colorscheme("tokyonight-moon")
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })

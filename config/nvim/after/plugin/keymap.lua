@@ -145,7 +145,7 @@ function LspKeyMap()
     nnoremap("gi", function() vim.lsp.buf.implementation() end, {}, "Implementation")
 
     nnoremap('<leader>ls', function() builtin.lsp_document_symbols() end, {}, '[D]ocument [S]ymbols')
-    nnoremap('<leader>la', function() vim.lsp.buf.code_actions() end, {}, '[D]ocument [S]ymbols')
+    nnoremap('<leader>la', function() vim.lsp.buf.code_action() end, {}, '[D]ocument [S]ymbols')
     nnoremap('<leader>lr', function() vim.lsp.buf.rename() end, {}, '[D]ocument [S]ymbols')
     nnoremap("K", function() vim.lsp.buf.hover() end)
 

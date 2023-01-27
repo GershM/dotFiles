@@ -53,6 +53,7 @@ require("packer").startup({
         use { "L3MON4D3/LuaSnip" }
         use { "saadparwaiz1/cmp_luasnip" }
 
+        use { "jose-elias-alvarez/null-ls.nvim" }
         -- nvim dev
         use { "folke/neodev.nvim" }
 
@@ -72,8 +73,8 @@ require("packer").startup({
         --use { "olimorris/neotest-phpunit" }
 
         -- Organization
-        use { 'nvim-orgmode/orgmode', config = function() require('orgmode').setup {} end }
-
+        --use { 'nvim-orgmode/orgmode', config = function() require('orgmode').setup {} end }
+        use { "nvim-neorg/neorg" }
 
         -- Comments
         use { "folke/todo-comments.nvim", config = function() require("todo-comments").setup {} end }
@@ -87,6 +88,7 @@ require("packer").startup({
         use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
         use { "microsoft/vscode-js-debug", opt = true, run = "npm install --legacy-peer-deps && npm run compile",
             tag = 'v1.74.1' }
+        use { 'mfussenegger/nvim-dap-python' }
 
         -- Git
         use { 'f-person/git-blame.nvim' }

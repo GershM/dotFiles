@@ -2,12 +2,17 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- Setup nvim-cmp.
+local null_ls = require("null-ls")
 local cmp = require("cmp")
+local luasnip = require("luasnip")
+local types = require("luasnip.util.types")
+
 local source_mapping = {
     nvim_lsp = "[LSP]",
     nvim_lua = "[Lua]",
     path = "[Path]",
     buffer = "[Buffer]",
+    neorg = "[Neorg]",
 }
 
 local cmp_kinds = {
@@ -38,8 +43,6 @@ local cmp_kinds = {
     TypeParameter = '  ',
 }
 
-local luasnip = require("luasnip")
-local types = require "luasnip.util.types"
 luasnip.config.set_config({
     history = true,
     updateevents = "TextChanged,TextChangedI",
@@ -81,6 +84,8 @@ cmp.setup({
         },
     },
     sources = {
+        --{ name = "orgmode" },
+        { name = "neorg" },
         { name = "nvim_lsp", option = { show_autosnippets = true } },
         { name = "luasnip", option = { show_autosnippets = true } },
         { name = "buffer" },
@@ -128,14 +133,19 @@ local settings = {
     },
     intelephense = {
         stubs = {
-            "apache", "bcmath", "bz2", "calendar", "com_dotnet", "Core", "ctype", "curl", "date",
-            "dba", "dom", "enchant", "exif", "FFI", "fileinfo", "filter", "fpm", "ftp", "gd", "gettext",
-            "gmp", "hash", "iconv", "imap", "intl", "json", "ldap", "libxml", "mbstring", "meta", "mysqli",
-            "oci8", "odbc", "openssl", "pcntl", "pcre", "PDO", "pdo_ibm", "pdo_mysql", "pdo_pgsql", "pdo_sqlite", "pgsql",
-            "Phar", "posix", "pspell", "readline", "Reflection", "session", "shmop", "SimpleXML", "snmp", "soap",
-            "sockets", "sodium", "SPL", "sqlite3", "standard", "superglobals", "sysvmsg", "sysvsem", "sysvshm", "tidy",
-            "tokenizer", "xml", "xmlreader", "xmlrpc", "xmlwriter", "xsl", "Zend OPcache", "zip", "zlib",
-            "wordpress", "phpunit",
+            "apache", "bcmath", "bz2", "calendar", "com_dotnet", "Core", "ctype", "curl", "date", "dba", "dom", "enchant",
+            "exif", "FFI", "fileinfo", "filter", "fpm", "ftp", "gd", "gettext", "gmp", "hash", "iconv", "imap", "intl",
+            "json", "ldap", "libxml", "mbstring", "meta", "mysqli", "oci8", "odbc", "openssl", "pcntl", "pcre", "PDO",
+            "pdo_ibm", "pdo_mysql", "pdo_pgsql", "pdo_sqlite", "pgsql", "Phar", "posix", "pspell", "readline",
+            "Reflection", "session", "shmop", "SimpleXML", "snmp", "soap", "sockets", "sodium", "SPL", "sqlite3",
+            "standard", "superglobals", "sysvmsg", "sysvsem", "sysvshm", "tidy", "tokenizer", "xml", "xmlreader",
+            "xmlrpc", "xmlwriter", "xsl", "ZendOPcache", "zip", "zlib"
+        },
+        environment = {
+            shortOpenTag = true
+        },
+        completion = {
+            fullyQualifyGlobalConstantsAndFunctions= true,
         },
         diagnostics = {
             enable = true,
@@ -162,6 +172,15 @@ local settings = {
 
 -- Equivalent (but not equal) to lspconfig.<langserver>.setup{}
 lsp_installer.on_server_ready(function(server) server:setup(config({ settings = settings })) end)
+
+
+null_ls.setup({
+    sources = {
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.diagnostics.eslint,
+        null_ls.builtins.completion.spell,
+    },
+})
 
 vim.diagnostic.config({
     float = {
