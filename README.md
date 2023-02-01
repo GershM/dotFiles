@@ -2,17 +2,17 @@
 ## Fish 
 - Requierments:
     - [Fish](https://fishshell.com)
-    - [Starship)[https://starship.rs] 
+    - [Starship](https://starship.rs) 
 - Has vi key bindings:
-    - Start in insert mode.
-    - ESC change to Normal mode
+    - i - Start in insert mode.
+    - ESC - change to Normal mode
     - etc..
 
 ## Tmux
 - The default leader binding changed from ``C-b`` to ``C-s``.
 - Using vi key bindings in the select mode.
 - Update before use:
-    - Need to Edit the IP queries i order to get the requied IP addres.
+    - Need to Edit the IP queries i order to get the requied IP address.
     - Change the default shell in:
     ```
         set-option -g default-command fish # <- change the fish to favorite shell
@@ -39,4 +39,4 @@ ln -s [Project-Location]/config/nvim ~/.config/nvim
 ```
 
 ## Todo
-- Need to move it in to a script.
+- Need to move Tmux IP query into seperate a script.

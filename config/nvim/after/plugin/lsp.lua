@@ -110,7 +110,6 @@ local function config(_config)
     }, _config or {})
 end
 
-local lsp_installer = require("nvim-lsp-installer")
 -- Pass configurations settings to the different LSP's
 local settings = {
     sumneko_lua = {
@@ -145,7 +144,7 @@ local settings = {
             shortOpenTag = true
         },
         completion = {
-            fullyQualifyGlobalConstantsAndFunctions= true,
+            fullyQualifyGlobalConstantsAndFunctions = true,
         },
         diagnostics = {
             enable = true,
@@ -168,19 +167,26 @@ local settings = {
         },
     },
 }
-
-
--- Equivalent (but not equal) to lspconfig.<langserver>.setup{}
-lsp_installer.on_server_ready(function(server) server:setup(config({ settings = settings })) end)
-
-
-null_ls.setup({
-    sources = {
-        null_ls.builtins.formatting.stylua,
-        null_ls.builtins.diagnostics.eslint,
-        null_ls.builtins.completion.spell,
-    },
+require("mason").setup({
+  ui = {
+    icons = {
+      package_installed = "✓",
+      package_pending = "➜",
+      package_uninstalled = "✗"
+    }
+  }
 })
+
+require("mason-lspconfig").setup({})
+
+require("mason-lspconfig").setup_handlers({
+  -- The first entry (without a key) will be the default handler
+  function (server_name)
+      require("lspconfig")[server_name].setup(config(settings))
+  end,
+})
+
+null_ls.setup({ })
 
 vim.diagnostic.config({
     float = {

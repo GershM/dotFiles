@@ -14,9 +14,10 @@ local packer_bootstrap = ensure_packer()
 require("packer").startup({
     function(use)
         -- My Projects
-        use { "~/myProjects/neotest-phpunit" }
-        use { "~/myProjects/phpunit.nvim" }
+        --use { "~/myProjects/neotest-phpunit" }
+        --use { "~/myProjects/phpunit.nvim" }
         use { "~/myProjects/deploy.nvim" }
+
         -- Deployment
         --use { 'GershM/deploy.nvim' }
 
@@ -41,7 +42,9 @@ require("packer").startup({
 
         -- LSP
         use { 'neovim/nvim-lspconfig' }
-        use { 'williamboman/nvim-lsp-installer' }
+        --use { 'williamboman/nvim-lsp-installer' }
+        use { 'williamboman/mason.nvim' }
+        use { 'williamboman/mason-lspconfig.nvim', requires = { 'williamboman/mason.nvim' } }
 
         use { "hrsh7th/cmp-nvim-lsp" }
         use { "hrsh7th/cmp-buffer" }

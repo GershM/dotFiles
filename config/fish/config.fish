@@ -1,5 +1,5 @@
 set -e fish_user_paths
-set -U fish_user_paths $HOME/.bin  $HOME/.local/bin $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
+set -U fish_user_paths /opt/homebrew/bin $HOME/.bin  $HOME/.local/bin $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
 
 ### EXPORT ###
 set fish_greeting                                 # Supresses fish's intro message

@@ -175,8 +175,8 @@ dapui.setup({
         },
         {
             elements = {
-                "breakpoints",
                 "stacks",
+                "breakpoints",
             },
             size = 40,
             position = "left",
@@ -187,7 +187,7 @@ dapui.setup({
                 "watches",
             },
             size = 40, -- 40 columns
-            position = "rigth",
+            position = "right",
         },
     },
     controls = {
@@ -209,7 +209,7 @@ dapui.setup({
     floating = {
         max_height = nil, -- These can be integers or a float between 0 and 1.
         max_width = nil, -- Floats will be treated as percentage of your screen.
-        border = "single", -- Border style. Can be "single", "double" or "rounded"
+        border = "double", -- Border style. Can be "single", "double" or "rounded"
         mappings = {
             close = { "q", "<Esc>" },
         },
@@ -231,12 +231,12 @@ require("nvim-dap-virtual-text").setup({
     only_first_definition = true, -- only show virtual text at first definition (if there are multiple)
     all_references = true, -- show virtual text on all all references of the variable (not only definitions)
     display_callback = function(variable, _buf, _stackframe, _node)
-        return variable.name .. ' = ' .. variable.value
+        return variable.name .. ' = ' .. variable.value .. " "
     end,
 
-    virt_text_pos = 'eol', -- position of virtual text, see `:h nvim_buf_set_extmark()`
+    virt_text_pos = 'right_align', -- position of virtual text, see `:h nvim_buf_set_extmark()`
     all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
     virt_lines = false, -- show virtual lines instead of virtual text (will flicker!)
-    virt_text_win_col = 80 -- position the virtual text at a fixed window column (starting from the first text column) ,
+    --virt_text_win_col = 180 -- position the virtual text at a fixed window column (starting from the first text column) ,
     -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
 })

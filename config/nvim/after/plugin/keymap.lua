@@ -114,7 +114,7 @@ nnoremap("<leader>dlf", function() telescopeDap.frames() end, { silent = true })
 
 -- lsp
 nnoremap("<leader>l", nil, nil, "LSP")
-nnoremap("<leader>li", function() vim.cmd.LspInstallInfo() end, { silent = true }, "Lsp Install Info")
+nnoremap("<leader>li", function() vim.cmd.Mason() end, { silent = true }, "Lsp Install Info")
 
 -- Snippets
 sinoremap("<c-k>", function() if ls.expand_or_jumpable() then ls.expand_or_jump() end end, { silent = true }, "")
