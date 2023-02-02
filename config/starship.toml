@@ -1,0 +1,89 @@
+# Wait 10 milliseconds for starship to check files under the current directory.
+scan_timeout = 10
+
+#[username]
+#style_user = "green bold"
+#style_root = "red bold"
+#format = "[$user]($style) "
+#disabled = false
+#show_always = true
+
+#[hostname]
+#ssh_only = false
+#format = 'on [$hostname](bold purple) '
+#trim_at = "."
+#disabled = false
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character]                            # The name of the module we are configuring is "character"
+success_symbol = "[I ❯](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
+vicmd_symbol = "[N ❯](bold blue)"
+vimcmd_replace_one_symbol = "[R ❯](bold orange)"
+vimcmd_replace_symbol = "[R ❯](bold orange)"
+vimcmd_visual_symbol = "[V ❯](bold purple)"
+error_symbol = "[✗ ❯](bold red)"
+
+#  
+# configure directory
+[directory]
+read_only = " "
+truncation_length = 10
+truncate_to_repo = true # truncates directory to root folder if in github repo
+style = "bold italic blue"
+
+[cmd_duration]
+min_time = 4
+show_milliseconds = false
+disabled = false
+style = "bold italic red"
+
+[docker_context]
+symbol = " "
+format = "via [$symbol$context]($style) "
+style = "blue bold"
+only_with_files = true
+detect_files = ["docker-compose.yml", "docker-compose-full.yaml", "docker-compose-web.yaml", "docker-compose.yaml", "Dockerfile"]
+detect_folders = ["docker"]
+disabled = false
+
+[git_branch]
+symbol = " "
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+stashed = "[${count}*](green)" 
+modified = "[${count}+](yellow)" 
+deleted =  "[${count}-](red)" 
+conflicted =  "[${count}~](red)" 
+ahead = "⇡${count}"
+behind = "⇣${count}"
+untracked = "[${count}?](blue)" 
+staged = "[${count}+](green)" 
+
+[git_state]
+style =	"bold red"
+format = "[$state( $progress_current/$progress_total) ]($style)"
+rebase = "rebase"
+merge = "merge"	
+revert = "revert"	
+cherry_pick = "cherry"
+bisect = "bisect"	
+am = "am"	
+am_or_rebase = "am/rebase"
+
+[nix_shell]
+symbol = " "
+
+[package]
+symbol = " "
+
+[php]
+symbol = " "
+
+[memory_usage]
+symbol = " "
+
+[nodejs]
+format = "via [ Node.js $version](bold green) "
+detect_files = ["package.json", ".node-version"]
+detect_folders = ["node_modules"]

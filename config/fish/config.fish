@@ -1,7 +1,31 @@
 set -e fish_user_paths
 set -U fish_user_paths /opt/homebrew/bin $HOME/.bin  $HOME/.local/bin $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
 
-fish_vi_key_bindings
+function fish_user_key_bindings
+  # fish_default_key_bindings
+  fish_vi_key_bindings
+end
+
+function fish_mode_prompt
+  switch $fish_bind_mode
+    case default
+      set_color --bold red
+      echo 'N'
+    case insert
+      set_color --bold green
+      echo 'I'
+    case replace_one
+      set_color --bold green
+      echo 'R'
+    case visual
+      set_color --bold brmagenta
+      echo 'V'
+    case '*'
+      set_color --bold red
+      echo '?'
+  end
+  set_color normal
+end
 
 ### EXPORT ###
 set fish_greeting                                 # Supresses fish's intro message
