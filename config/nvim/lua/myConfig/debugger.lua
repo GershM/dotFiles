@@ -61,7 +61,7 @@ for _, language in ipairs({ "typescript", "javascript", "javascriptreact", "type
     }
 end
 
---    PHP Debugger
+-- PHP Debugger
 dap.adapters.php = {
     type = 'executable',
     command = 'node',

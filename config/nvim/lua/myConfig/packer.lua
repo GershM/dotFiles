@@ -16,7 +16,7 @@ require("packer").startup({
         -- My Projects
         --use { "~/myProjects/neotest-phpunit" }
         --use { "~/myProjects/phpunit.nvim" }
-        use { "~/myProjects/deploy.nvim" }
+        --use { "~/myProjects/deploy.nvim" }
 
         -- Deployment
         --use { 'GershM/deploy.nvim' }

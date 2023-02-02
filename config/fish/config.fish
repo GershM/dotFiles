@@ -1,9 +1,12 @@
 set -e fish_user_paths
 set -U fish_user_paths /opt/homebrew/bin $HOME/.bin  $HOME/.local/bin $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
 
+fish_vi_key_bindings
+
 ### EXPORT ###
 set fish_greeting                                 # Supresses fish's intro message
 set TERM "xterm-256color"                         # Sets the terminal type
+set EDITOR "nvim"
 
 ### AUTOCOMPLETE AND HIGHLIGHT COLORS ###
 set fish_color_normal brcyan
@@ -44,4 +47,4 @@ alias rm='rm -i'
 
 starship init fish | source
 
-source /Users/gershmirson/.docker/init-fish.sh || true # Added by Docker Desktop
+source $HOME/.docker/init-fish.sh || true # Added by Docker Desktop

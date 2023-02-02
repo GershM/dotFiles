@@ -180,7 +180,6 @@ require("mason").setup({
 require("mason-lspconfig").setup({})
 
 require("mason-lspconfig").setup_handlers({
-  -- The first entry (without a key) will be the default handler
   function (server_name)
       require("lspconfig")[server_name].setup(config(settings))
   end,

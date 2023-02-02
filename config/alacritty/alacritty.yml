@@ -21,7 +21,7 @@ env:
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  TERM: xterm #alacritty
+  TERM: xterm-256color #alacritty
 
 window:
   # Window dimensions (changes require restart)
@@ -101,13 +101,13 @@ window:
   # the default theme variant.
   #decorations_theme_variant: None
 
-#scrolling:
+scrolling:
   # Maximum number of lines in the scrollback buffer.
   # Specifying '0' will disable scrolling.
-  #history: 10000
+  history: 10000
 
   # Scrolling distance multiplier.
-  #multiplier: 3
+  multiplier: 3
 
 # Font configuration
 font:
@@ -466,8 +466,9 @@ colors:
 #   - (Windows) powershell
 shell:
   program: /opt/homebrew/bin/fish
-#  args:
-#    - --login
+  args:
+    - -c
+    - "tmux attach || tmux"
 
 # Startup directory
 #
@@ -798,6 +799,7 @@ shell:
   #- { key: Space,  mods: Shift|Control, mode: ~Search,    action: ToggleViMode            }
   #- { key: Space,  mods: Shift|Control, mode: Vi|~Search, action: ScrollToBottom          }
   #- { key: Escape,                      mode: Vi|~Search, action: ClearSelection          }
+  #- { key: Escape,                      mode: Vi|~Search, action: None          }
   #- { key: I,                           mode: Vi|~Search, action: ToggleViMode            }
   #- { key: I,                           mode: Vi|~Search, action: ScrollToBottom          }
   #- { key: C,      mods: Control,       mode: Vi|~Search, action: ToggleViMode            }
