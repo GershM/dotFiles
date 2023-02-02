@@ -468,7 +468,7 @@ shell:
   program: /opt/homebrew/bin/fish
   args:
     - -c
-    - "tmux attach || tmux"
+    - "tmux"
 
 # Startup directory
 #
