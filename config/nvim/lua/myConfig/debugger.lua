@@ -1,4 +1,5 @@
-local dap, dapui = require("dap"), require("dapui")
+local dap = require("dap")
+--local dapui = require("dapui")
 local lspDir = os.getenv('HOME') .. "/lsp"
 
 
@@ -8,17 +9,92 @@ local function clearNamespace()
     vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
 end
 
-dap.listeners.after.event_initialized["dapui_config"] = function()
-    dapui.open()
-end
-dap.listeners.before.event_terminated["dapui_config"] = function()
-    --dapui.close()
-    clearNamespace()
-end
-dap.listeners.before.event_exited["dapui_config"] = function()
-    --dapui.close()
-    clearNamespace()
-end
+--dap.listeners.after.event_initialized["dapui_config"] = function()
+    --dapui.open()
+--end
+--dap.listeners.before.event_terminated["dapui_config"] = function()
+    ----dapui.close()
+    --clearNamespace()
+--end
+--dap.listeners.before.event_exited["dapui_config"] = function()
+    ----dapui.close()
+    --clearNamespace()
+--end
+
+--dapui.setup({
+    --icons = { expanded = "", collapsed = "", current_frame = "" },
+    --mappings = {
+        --expand = { "<Tab>" },
+        --open = "o",
+        --remove = "d",
+        --edit = "e",
+        --repl = "r",
+        --toggle = "t",
+    --},
+    ---- Use this to override mappings for specific elements
+    --element_mappings = {
+        ---- stacks = {
+        ----   open = "<CR>",
+        ----   expand = "o",
+        ---- }
+    --},
+    --expand_lines = vim.fn.has("nvim-0.7") == 1,
+    --layouts = {
+        --{
+            --elements = {
+                --"repl",
+                ----"console", -- Not clear Y I need it.
+            --},
+            --size = 0.25, -- 25% of total lines
+            --position = "bottom",
+        --},
+        --{
+            --elements = {
+                --"stacks",
+                --"breakpoints",
+            --},
+            --size = 40,
+            --position = "left",
+        --},
+        --{
+            --elements = {
+                --{ id = "scopes", size = 0.25 },
+                --"watches",
+            --},
+            --size = 40, -- 40 columns
+            --position = "right",
+        --},
+    --},
+    --controls = {
+        ---- Requires Neovim nightly (or 0.8 when released)
+        --enabled = true,
+        ---- Display controls in this element
+        --element = "repl",
+        --icons = {
+            --pause = "",
+            --play = "",
+            --step_into = "",
+            --step_over = "",
+            --step_out = "",
+            --step_back = "",
+            --run_last = "",
+            --terminate = "",
+        --},
+    --},
+    --floating = {
+        --max_height = nil, -- These can be integers or a float between 0 and 1.
+        --max_width = nil, -- Floats will be treated as percentage of your screen.
+        --border = "double", -- Border style. Can be "single", "double" or "rounded"
+        --mappings = {
+            --close = { "q", "<Esc>" },
+        --},
+    --},
+    --windows = { indent = 1 },
+    --render = {
+        --max_type_length = nil, -- Can be integer or nil.
+        --max_value_lines = 100, -- Can be integer or nil.
+    --}
+--})
 
 -- Chrome Debugger
 require("dap-vscode-js").setup({
@@ -145,81 +221,6 @@ dap.configurations.sh = {
         terminalKind = "integrated";
     }
 }
-
-dapui.setup({
-    icons = { expanded = "", collapsed = "", current_frame = "" },
-    mappings = {
-        expand = { "<Tab>" },
-        open = "o",
-        remove = "d",
-        edit = "e",
-        repl = "r",
-        toggle = "t",
-    },
-    -- Use this to override mappings for specific elements
-    element_mappings = {
-        -- stacks = {
-        --   open = "<CR>",
-        --   expand = "o",
-        -- }
-    },
-    expand_lines = vim.fn.has("nvim-0.7") == 1,
-    layouts = {
-        {
-            elements = {
-                "repl",
-                --"console", -- Not clear Y I need it.
-            },
-            size = 0.25, -- 25% of total lines
-            position = "bottom",
-        },
-        {
-            elements = {
-                "stacks",
-                "breakpoints",
-            },
-            size = 40,
-            position = "left",
-        },
-        {
-            elements = {
-                { id = "scopes", size = 0.25 },
-                "watches",
-            },
-            size = 40, -- 40 columns
-            position = "right",
-        },
-    },
-    controls = {
-        -- Requires Neovim nightly (or 0.8 when released)
-        enabled = true,
-        -- Display controls in this element
-        element = "repl",
-        icons = {
-            pause = "",
-            play = "",
-            step_into = "",
-            step_over = "",
-            step_out = "",
-            step_back = "",
-            run_last = "",
-            terminate = "",
-        },
-    },
-    floating = {
-        max_height = nil, -- These can be integers or a float between 0 and 1.
-        max_width = nil, -- Floats will be treated as percentage of your screen.
-        border = "double", -- Border style. Can be "single", "double" or "rounded"
-        mappings = {
-            close = { "q", "<Esc>" },
-        },
-    },
-    windows = { indent = 1 },
-    render = {
-        max_type_length = nil, -- Can be integer or nil.
-        max_value_lines = 100, -- Can be integer or nil.
-    }
-})
 
 require("nvim-dap-virtual-text").setup({
     enabled = true, -- enable this plugin (the default)

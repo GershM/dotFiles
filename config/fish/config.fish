@@ -1,5 +1,5 @@
 set -e fish_user_paths
-set -U fish_user_paths /opt/homebrew/bin $HOME/.bin  $HOME/.local/bin $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
+set -U fish_user_paths /opt/homebrew/bin $HOME/.bin  $HOME/.local/bin /usr/local/bin/ $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
 
 function fish_user_key_bindings
   # fish_default_key_bindings
@@ -73,3 +73,5 @@ alias rm='rm -i'
 starship init fish | source
 
 source $HOME/.docker/init-fish.sh || true # Added by Docker Desktop
+
+source /Users/gershmirson/.docker/init-fish.sh || true # Added by Docker Desktop

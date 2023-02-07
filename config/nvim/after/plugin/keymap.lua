@@ -10,13 +10,13 @@ local nmap = Remap.nmap
 
 local builtin = require('telescope.builtin')
 local neogit = require('neogit')
-local phpunit = require('phpunit')
+--local phpunit = require('phpunit')
 local ls = require('luasnip')
 --local neotest = require('neotest')
 
 local dap = require('dap')
 local telescopeDap = require('telescope').extensions.dap
-local dapui = require("dapui")
+-- local dapui = require("dapui")
 
 function Execute()
     local type = vim.bo.filetype
@@ -73,14 +73,15 @@ nnoremap("<leader>us", function() vim.cmd.SyncRemoteProject() end, { silent = fa
 nnoremap("<leader>ur", function() vim.cmd.ExecuteRemoteFile() end, { silent = false }, "Sync Remote")
 
 -- Git
-nnoremap("<leader>g", nil, nil, "Git")
+--nnoremap("<leader>g", nil, nil, "Git")
 nnoremap("<leader>gg", function() neogit.open() end, { silent = false })
+nnoremap("<leader>gl", function() vim.cmd.LazyGit() end, { silent = false })
 nnoremap('<leader>gB', function() builtin.git_branches() end, {}, "Branches")
 nnoremap('<leader>gs', function() builtin.git_status() end, {}, "Status")
 nnoremap('<leader>gb', function() vim.cmd.GitBlameToggle() end, {}, "Git Blame")
 
 
-nnoremap("<leader>gd", nil, nil, "Diff")
+--nnoremap("<leader>gd", nil, nil, "Diff")
 nnoremap('<leader>gdo', " <cmd>DiffviewOpen<CR>", {}, "Open")
 nnoremap('<leader>gdc', " <cmd>DiffviewClose<CR>", {}, "Close")
 nnoremap('<leader>gdb', " <cmd>DiffviewFileHistory<CR>", {}, "Branch")
@@ -89,12 +90,12 @@ nnoremap('<leader>gdt', " <cmd>DiffviewToggleFiles<CR>", {}, "Toggle Diff Files"
 nnoremap('<leader>gdr', " <cmd>DiffviewRefresh<CR>", {}, "Refresh")
 
 -- Debugger
-nnoremap("<leader>d", nil, nil, "Debugger")
+--nnoremap("<leader>d", nil, nil, "Debugger")
 nnoremap("<leader>db", function() dap.toggle_breakpoint() end, { silent = true }, "Add/Remove Breakpoint")
-nnoremap("<leader>dr", function() dapui.toggle({}) end, { silent = true }, "Open/Close Dap UI")
+--nnoremap("<leader>dr", function() dapui.toggle({}) end, { silent = true }, "Open/Close Dap UI")
 nnoremap("<leader>dR", function() dap.run_last() end, { silent = true }, "Run Last")
-nnoremap("<leader>dk", function() dapui.eval() end, { silent = true }, "")
-nnoremap("<leader>dK", function() dapui.eval(vim.fn.input('Eval Expression: '), {}) end, { silent = true }, "")
+--nnoremap("<leader>dk", function() dapui.eval() end, { silent = true }, "")
+--nnoremap("<leader>dK", function() dapui.eval(vim.fn.input('Eval Expression: '), {}) end, { silent = true }, "")
 nnoremap("<Leader>dB", function() dap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end, { silent = true },
     "")
 nnoremap("<Leader>dp", function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
@@ -102,8 +103,8 @@ nnoremap("<Leader>dp", function() dap.set_breakpoint(nil, nil, vim.fn.input('Log
 
 nnoremap("<F1>", function() dap.continue() end, { silent = true }, "Debug/Continue")
 nnoremap("<F2>", function() dap.step_into() end, { silent = true }, "Step Into")
-nnoremap("<F3>", function() dap.step_out() end, { silent = true }, "Step Out")
-nnoremap("<F4>", function() dap.step_over() end, { silent = true }, "Step Over")
+nnoremap("<F3>", function() dap.step_over() end, { silent = true }, "Step Over")
+nnoremap("<F4>", function() dap.step_out() end, { silent = true }, "Step Out")
 
 nnoremap("<leader>dlb", function() telescopeDap.list_breakpoints() end, { silent = true }, "Breakpoints List")
 nnoremap("<leader>dlv", function() telescopeDap.variables() end, { silent = true }, "Variables List")
@@ -113,7 +114,7 @@ nnoremap("<leader>dC", function() telescopeDap.commands() end, { silent = true }
 nnoremap("<leader>dlf", function() telescopeDap.frames() end, { silent = true })
 
 -- lsp
-nnoremap("<leader>l", nil, nil, "LSP")
+--nnoremap("<leader>l", nil, nil, "LSP")
 nnoremap("<leader>li", function() vim.cmd.Mason() end, { silent = true }, "Lsp Install Info")
 
 -- Snippets
@@ -127,7 +128,7 @@ nnoremap("<leader><leader>s", function() vim.cmd.source("~/.config/nvim/after/pl
 
 -- Tests
 --nnoremap('<leader>t', nil, nil, 'Tests')
-nnoremap('<leader>tt', function() phpunit.run() end)
+--nnoremap('<leader>tt', function() phpunit.run() end)
 --nnoremap('<leader>to', function() neotest.output_panel.toggle() end, nil, 'Panel Toggle')
 --nnoremap('<leader>tr', function() neotest.run.run() end, nil, 'Start')
 --nnoremap('<leader>tf', function() neotest.run.run(vim.fn.expand("%:@:p")) end, nil, 'Start Current File')

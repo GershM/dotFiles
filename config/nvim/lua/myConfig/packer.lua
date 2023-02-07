@@ -16,7 +16,7 @@ require("packer").startup({
         -- My Projects
         --use { "~/myProjects/neotest-phpunit" }
         --use { "~/myProjects/phpunit.nvim" }
-        --use { "~/myProjects/deploy.nvim" }
+        use { "~/myProjects/deploy.nvim" }
 
         -- Deployment
         --use { 'GershM/deploy.nvim' }
@@ -35,10 +35,12 @@ require("packer").startup({
         use { 'kyazdani42/nvim-web-devicons' }
         use { 'mbbill/undotree' }
         use { 'nvim-tree/nvim-tree.lua', tag = "nightly" }
+
         -- Colore Schema
         use { "ellisonleao/gruvbox.nvim" }
         use { "norcalli/nvim-colorizer.lua" }
         use { "folke/tokyonight.nvim" }
+        use { "p00f/nvim-ts-rainbow"}
 
         -- LSP
         use { 'neovim/nvim-lspconfig' }
@@ -57,6 +59,7 @@ require("packer").startup({
         use { "saadparwaiz1/cmp_luasnip" }
 
         use { "jose-elias-alvarez/null-ls.nvim" }
+
         -- nvim dev
         use { "folke/neodev.nvim" }
 
@@ -98,6 +101,8 @@ require("packer").startup({
         use { 'lewis6991/gitsigns.nvim' }
         use { 'TimUntersberger/neogit' }
         use { 'sindrets/diffview.nvim' }
+        --use { 'jesseduffield/lazygit' }
+        use { 'kdheepak/lazygit.nvim' }
 
 
     end,
