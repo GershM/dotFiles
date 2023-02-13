@@ -20,8 +20,13 @@ local telescopeDap = require('telescope').extensions.dap
 
 function Execute()
     local type = vim.bo.filetype
-    local progsByExtention = { ["javascript"] = "node", ["lua"] = "lua", ["php"] = "php", ["sh"] = "bash",
-        ["py"] = "python" }
+    local progsByExtention = {
+        ["javascript"] = "node",
+        ["lua"] = "lua",
+        ["php"] = "php",
+        ["sh"] = "bash",
+        ["py"] = "python"
+    }
     local prog = progsByExtention[type]
     if prog then
         vim.cmd.write()
@@ -50,7 +55,8 @@ nnoremap("<leader>nt", function() vim.cmd.NvimTreeToggle() end, { silent = false
 nnoremap("<leader>nu", function() vim.cmd.UndotreeToggle() end, { silent = false }, "Undo Tree")
 
 -- Telescope
-nnoremap("<leader>f", nil, nil, "File")
+nnoremap("<leader>p", nil, nil, "File")
+nnoremap('<leader>pp', function() require 'telescope'.extensions.project.project() end, {}, "Projects")
 nnoremap('<leader>ff', function() builtin.find_files() end, {}, 'Find File')
 nnoremap('<leader>fc', function() builtin.find_files({ cwd = "~/.config/nvim" }) end, {}, 'Find nvim Config file ')
 nnoremap('<leader>fg', function() builtin.live_grep() end, {}, 'Live Grep')
@@ -99,7 +105,7 @@ nnoremap("<leader>dR", function() dap.run_last() end, { silent = true }, "Run La
 nnoremap("<Leader>dB", function() dap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end, { silent = true },
     "")
 nnoremap("<Leader>dp", function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
-    { silent = true } , "")
+    { silent = true }, "")
 
 nnoremap("<F1>", function() dap.continue() end, { silent = true }, "Debug/Continue")
 nnoremap("<F2>", function() dap.step_into() end, { silent = true }, "Step Into")
@@ -119,7 +125,7 @@ nnoremap("<leader>li", function() vim.cmd.Mason() end, { silent = true }, "Lsp I
 
 -- Snippets
 sinoremap("<c-k>", function() if ls.expand_or_jumpable() then ls.expand_or_jump() end end, { silent = true }, "")
-sinoremap("<C-j>", function() if ls.jumpable(-1) then ls.jump(-1) end end, { silent = true }, "")
+sinoremap("<C-j>", function() if ls.jumpable( -1) then ls.jump( -1) end end, { silent = true }, "")
 sinoremap("<C-l>", function() if ls.choice_active() then ls.change_choice(1) end end, { silent = true }, "")
 
 

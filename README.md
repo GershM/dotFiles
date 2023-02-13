@@ -50,10 +50,7 @@
 ```
 
 ## Nvim
-- Plugins:
-    - 
-- Key Bindings:
-    - 
+The nvim Documentation is in nvim's [README](/config/nvim/README.md) file.
 
 ## Deploy Configuration:
 ```bash 

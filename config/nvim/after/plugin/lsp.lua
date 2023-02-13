@@ -6,6 +6,7 @@ local null_ls = require("null-ls")
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 local types = require("luasnip.util.types")
+local navic = require("nvim-navic")
 
 local source_mapping = {
     nvim_lsp = "[LSP]",
@@ -13,6 +14,37 @@ local source_mapping = {
     path = "[Path]",
     buffer = "[Buffer]",
     neorg = "[Neorg]",
+}
+
+navic.setup {
+    icons = {
+        File = ' ',
+        Module = ' ',
+        Namespace = ' ',
+        Package = ' ',
+        Class = ' ',
+        Method = ' ',
+        Property = ' ',
+        Field = ' ',
+        Constructor = ' ',
+        Enum = ' ',
+        Interface = ' ',
+        Function = ' ',
+        Variable = ' ',
+        Constant = ' ',
+        String = ' ',
+        Number = ' ',
+        Boolean = ' ',
+        Array = ' ',
+        Object = ' ',
+        Key = ' ',
+        Null = ' ',
+        EnumMember = ' ',
+        Struct = ' ',
+        Event = ' ',
+        Operator = ' ',
+        TypeParameter = ' '
+    }
 }
 
 local cmp_kinds = {
@@ -63,7 +95,7 @@ cmp.setup({
         end,
     },
     mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-b>'] = cmp.mapping.scroll_docs( -4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         -- ['<Tab>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
@@ -87,7 +119,7 @@ cmp.setup({
         --{ name = "orgmode" },
         { name = "neorg" },
         { name = "nvim_lsp", option = { show_autosnippets = true } },
-        { name = "luasnip", option = { show_autosnippets = true } },
+        { name = "luasnip",  option = { show_autosnippets = true } },
         { name = "buffer" },
     },
 })
@@ -104,7 +136,8 @@ cmp.setup.cmdline(':', {
 local function config(_config)
     return vim.tbl_deep_extend("force", {
         capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities),
-        on_attach = function()
+        on_attach = function(client, bufnr)
+            navic.attach(client, bufnr)
             LspKeyMap()
         end,
     }, _config or {})
@@ -154,38 +187,33 @@ local settings = {
         diagnostics = {
             enable = true,
         },
-    },
-    json = {
-        schemas = {
-            {
-                description = "NPM configuration file",
-                fileMatch = {
-                    "package.json",
-                },
-                url = "https://json.schemastore.org/package.json",
-            },
-        },
-    },
+    }
 }
 require("mason").setup({
-  ui = {
-    icons = {
-      package_installed = "✓",
-      package_pending = "➜",
-      package_uninstalled = "✗"
+    ui = {
+        icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗"
+        }
     }
-  }
 })
 
-require("mason-lspconfig").setup({})
+require("mason-lspconfig").setup({
+    ensure_installed = { "tsserver", "intelephense" },
+    automatic_installation = true
+})
 
 require("mason-lspconfig").setup_handlers({
-  function (server_name)
-      require("lspconfig")[server_name].setup(config(settings))
-  end,
+    function(server_name)
+        require("lspconfig")[server_name].setup(config(settings))
+    end,
 })
 
-null_ls.setup({ })
+null_ls.setup({})
+require("mason").setup()
+require("mason-null-ls").setup({ automatic_setup = true })
+require('mason-null-ls').setup_handlers()
 
 vim.diagnostic.config({
     float = {
