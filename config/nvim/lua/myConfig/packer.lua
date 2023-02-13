@@ -22,19 +22,17 @@ require("packer").startup({
         --use { 'GershM/deploy.nvim' }
 
         -- General
-        use { "nvim-lua/plenary.nvim" }
         use { "wbthomason/packer.nvim" }
+        use { "nvim-lua/plenary.nvim" }
+        use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
+        use { 'nvim-lualine/lualine.nvim' }
+        use { 'kyazdani42/nvim-web-devicons' }
+        use { 'mbbill/undotree' }
 
-        -- Telescope
+        -- Navigation
         use { 'nvim-telescope/telescope.nvim' }
         use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
         use { "nvim-telescope/telescope-file-browser.nvim" }
-
-        use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
-        use { 'nvim-lualine/lualine.nvim' }
-
-        use { 'kyazdani42/nvim-web-devicons' }
-        use { 'mbbill/undotree' }
         use { 'nvim-tree/nvim-tree.lua', tag = "nightly" }
 
         -- Colore Schema
