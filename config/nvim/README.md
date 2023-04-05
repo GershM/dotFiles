@@ -4,6 +4,7 @@
 
   - General:
 
+    - GershM/deploy.nvim
     - nvim-treesitter/nvim-treesitter
     - nvim-lualine/lualine.nvim
     - kyazdani42/nvim-web-devicons
@@ -41,6 +42,11 @@
     - jay-babu/mason-nvim-dap.nvim
     - microsoft/vscode-js-debug
 
+  - UnitTests:
+
+    - nvim-neotest/neotest
+    - olimorris/neotest-phpunit
+
   - Git:
 
     - f-person/git-blame.nvim
@@ -75,6 +81,7 @@
 
 - Comment: keymaps https://github.com/numToStr/Comment.nvim
 - Null-ls: Config https://github.com/jose-elias-alvarez/null-ls.nvim
+- Neotest: Config
 - Telescope:
   - file-browser: https://github.com/nvim-telescope/telescope-file-browser.nvim
     - Config

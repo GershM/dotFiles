@@ -13,21 +13,17 @@ local packer_bootstrap = ensure_packer()
 
 require("packer").startup({
     function(use)
-        -- My Projects
-        --use { "~/myProjects/neotest-phpunit" }
-        --use { "~/myProjects/phpunit.nvim" }
-        use { "~/myProjects/deploy.nvim" }
-
         -- Deployment
-        --use { 'GershM/deploy.nvim' }
+        use { 'GershM/deploy.nvim' }
+        --use { '~/myProjects/deploy.nvim' }
 
-        -- General
         use { "wbthomason/packer.nvim" }
         use { "nvim-lua/plenary.nvim" }
         use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
         use { 'nvim-lualine/lualine.nvim' }
         use { 'kyazdani42/nvim-web-devicons' }
         use { 'mbbill/undotree' }
+        use({ "j-hui/fidget.nvim", config = function() require("fidget").setup() end })
 
         -- Navigation
         use { 'nvim-telescope/telescope.nvim' }
@@ -59,6 +55,7 @@ require("packer").startup({
         use { "jose-elias-alvarez/null-ls.nvim" }
         use { "folke/neodev.nvim" }
 
+        use { "Shatur/neovim-cmake" }
         -- Organization
         --use { 'nvim-orgmode/orgmode', config = function() require('orgmode').setup {} end }
         use { "nvim-neorg/neorg" }
@@ -67,6 +64,7 @@ require("packer").startup({
         use { "folke/todo-comments.nvim" }
 
         -- Debugger
+        use { 'leoluz/nvim-dap-go' }
         use { "mfussenegger/nvim-dap" }
         use { "rcarriga/nvim-dap-ui" }
         use { "nvim-telescope/telescope-dap.nvim" }
@@ -74,7 +72,7 @@ require("packer").startup({
         use { "mxsdev/nvim-dap-vscode-js" }
         use { "jay-babu/mason-nvim-dap.nvim" }
         use { "microsoft/vscode-js-debug", opt = true, run = "npm install --legacy-peer-deps && npm run compile",
-        tag = 'v1.74.1' }
+            tag = 'v1.74.1' }
 
         -- Git
         use { 'f-person/git-blame.nvim' }
@@ -87,6 +85,8 @@ require("packer").startup({
         use { 'glepnir/dashboard-nvim' }
         use { 'nvim-telescope/telescope-project.nvim' }
         use { 'numToStr/Comment.nvim' }
+        -- Tests
+        use({ "andythigpen/nvim-coverage", config = function() require("coverage").setup() end })
 
         --use {
         --"ahmedkhalf/project.nvim",
@@ -137,22 +137,14 @@ require("packer").startup({
         --}
         -- UI
         use { "stevearc/dressing.nvim" }
-        -- use { "sidebar-nvim/sidebar.nvim" }
+        use { "sidebar-nvim/sidebar.nvim" }
+        -- use { 'nanozuki/tabby.nvim' }
+        use { "beauwilliams/focus.nvim", config = function() require("focus").setup() end }
+        use {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}
 
         -- Tests
-        --use {
-        --"nvim-neotest/neotest",
-        --requires = {
-        --"vim-test/vim-test",
-        --"nvim-lua/plenary.nvim",
-        --"nvim-treesitter/nvim-treesitter",
-        --"antoinemadec/FixCursorHold.nvim",
-        --}
-        --}
-        --use { "nvim-neotest/neotest-vim-test" }
-        --use { "vim-test/vim-test" }
-        --use { "folke/neodev.nvim" }
-        --use { "olimorris/neotest-phpunit" }
+        use { "nvim-neotest/neotest" }
+        use { "olimorris/neotest-phpunit" }
 
         -- Git
         -- use { 'kdheepak/lazygit.nvim' }
@@ -160,7 +152,7 @@ require("packer").startup({
 
         -- LSP
         use { "SmiteshP/nvim-navic", requires = "neovim/nvim-lspconfig" }
-
+        use { "windwp/nvim-autopairs", config = function() require("nvim-autopairs").setup {} end }
         --use {
         --'ldelossa/litee.nvim',
         --after = 'nvim-lspconfig',

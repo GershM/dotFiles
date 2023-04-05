@@ -466,9 +466,6 @@ colors:
 #   - (Windows) powershell
 shell:
   program: /opt/homebrew/bin/fish
-  args:
-    - -c
-    - "tmux"
 
 # Startup directory
 #

@@ -75,8 +75,8 @@ dapui.setup({
         },
     },
     floating = {
-        max_height = nil, -- These can be integers or a float between 0 and 1.
-        max_width = nil, -- Floats will be treated as percentage of your screen.
+        max_height = nil,  -- These can be integers or a float between 0 and 1.
+        max_width = nil,   -- Floats will be treated as percentage of your screen.
         border = "double", -- Border style. Can be "single", "double" or "rounded"
         mappings = {
             close = { "q", "<Esc>" },
@@ -143,12 +143,36 @@ mdap.setup_handlers({
     end
 })
 
+
+
+dap.adapters.lldb = {
+    type = 'executable',
+    command = 'lldb-vscode', -- adjust as needed, must be absolute path
+    name = 'lldb'
+}
+
+dap.configurations.cpp = {
+    {
+        name = 'Launch Test',
+        type = 'lldb',
+        request = 'launch',
+        program = function()
+            vim.cmd("!cargo build")
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        args = {},
+    }
+}
+dap.configurations.rust = dap.configurations.cpp
+
 require("dap-vscode-js").setup({
     adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' }, -- which adapters to register in nvim-dap
 })
 
 for _, language in ipairs({ "typescript", "javascript", "javascriptreact", "typescriptreact" }) do
-    require("dap").configurations[language] = {
+    dap.configurations[language] = {
         {
             type = "pwa-node",
             request = "launch",
@@ -160,7 +184,6 @@ for _, language in ipairs({ "typescript", "javascript", "javascriptreact", "type
                 "${workspaceFolder}/client/**",
                 "!${workspaceFolder}/node_modules/**"
             },
-
         },
         {
             type = "pwa-chrome",
@@ -183,21 +206,23 @@ for _, language in ipairs({ "typescript", "javascript", "javascriptreact", "type
     }
 end
 
+require('dap-go').setup()
+
 require("nvim-dap-virtual-text").setup({
-    enabled = true, -- enable this plugin (the default)
-    enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
+    enabled = true,                     -- enable this plugin (the default)
+    enabled_commands = true,            -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
     highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
-    highlight_new_as_changed = true, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
-    show_stop_reason = true, -- show stop reason when stopped for exceptions
-    commented = false, -- prefix virtual text with comment string
-    only_first_definition = true, -- only show virtual text at first definition (if there are multiple)
-    all_references = true, -- show virtual text on all all references of the variable (not only definitions)
+    highlight_new_as_changed = true,    -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
+    show_stop_reason = true,            -- show stop reason when stopped for exceptions
+    commented = false,                  -- prefix virtual text with comment string
+    only_first_definition = true,       -- only show virtual text at first definition (if there are multiple)
+    all_references = true,              -- show virtual text on all all references of the variable (not only definitions)
     display_callback = function(variable, _buf, _stackframe, _node)
         return variable.name .. ' = ' .. variable.value .. " "
     end,
     virt_text_pos = 'right_align', -- position of virtual text, see `:h nvim_buf_set_extmark()`
-    all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
-    virt_lines = false, -- show virtual lines instead of virtual text (will flicker!)
+    all_frames = false,            -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
+    virt_lines = false,            -- show virtual lines instead of virtual text (will flicker!)
     --virt_text_win_col = 180 -- position the virtual text at a fixed window column (starting from the first text column) ,
     -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
 })

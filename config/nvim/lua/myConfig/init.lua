@@ -10,10 +10,11 @@ require("myConfig.neotest")
 require("myConfig.neorg")
 require("myConfig.comment")
 require("myConfig.dashboard")
+require("myConfig.colors")
+require("myConfig.sidebar")
 
-vim.cmd.colorscheme("tokyonight-moon")
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+
+--vim.cmd.colorscheme("tokyonight-moon")
 
 require("deploy").setup()
 -- [[ Highlight on yank ]]

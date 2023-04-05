@@ -44,3 +44,4 @@ vim.opt.shortmess:append("c")
 
 vim.o.clipboard = 'unnamedplus'
 vim.g.mapleader = " "
+vim.g.border_chars = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }

@@ -1,5 +1,9 @@
 set -e fish_user_paths
-set -U fish_user_paths /opt/homebrew/bin $HOME/.bin  $HOME/.local/bin /usr/local/bin/ $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
+set -U GOROOT "/usr/local/go"
+set -U GOOS "darwin"
+set -U GOARCH "arm64"
+set -U GOPATH "/Users/gershmirson/projects/go"
+set -U fish_user_paths /opt/homebrew/bin /opt/homebrew/opt/llvm/bin $HOME/.bin  $HOME/.local/bin $GOPATH/bin $GOROOT/bin /usr/local/bin/ $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths 
 
 function fish_user_key_bindings
   # fish_default_key_bindings

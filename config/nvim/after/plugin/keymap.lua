@@ -10,13 +10,12 @@ local nmap = Remap.nmap
 
 local builtin = require('telescope.builtin')
 local neogit = require('neogit')
---local phpunit = require('phpunit')
 local ls = require('luasnip')
---local neotest = require('neotest')
+local neotest = require('neotest')
 
 local dap = require('dap')
 local telescopeDap = require('telescope').extensions.dap
--- local dapui = require("dapui")
+local dapui = require("dapui")
 
 function Execute()
     local type = vim.bo.filetype
@@ -25,7 +24,8 @@ function Execute()
         ["lua"] = "lua",
         ["php"] = "php",
         ["sh"] = "bash",
-        ["py"] = "python"
+        ["py"] = "python",
+        ["go"] = "go run"
     }
     local prog = progsByExtention[type]
     if prog then
@@ -70,12 +70,11 @@ nnoremap('<leader>/', function()
     })
 end, {}, '[/] Fuzzily search in current buffer]')
 
-
 -- Upload
 nnoremap('<leader>u', nil, nil, 'Deployment')
 nnoremap("<leader>uf", function() vim.cmd.UploadFile() end, { silent = false }, "Upload File")
 nnoremap("<leader>ud", function() vim.cmd.DownloadFile() end, { silent = false }, "Download File")
-nnoremap("<leader>us", function() vim.cmd.SyncRemoteProject() end, { silent = false }, "Sync Remote")
+nnoremap("<leader>us", function() vim.cmd.SyncRemote() end, { silent = false }, "Sync Remote")
 nnoremap("<leader>ur", function() vim.cmd.ExecuteRemoteFile() end, { silent = false }, "Sync Remote")
 
 -- Git
@@ -98,10 +97,10 @@ nnoremap('<leader>gdr', " <cmd>DiffviewRefresh<CR>", {}, "Refresh")
 -- Debugger
 --nnoremap("<leader>d", nil, nil, "Debugger")
 nnoremap("<leader>db", function() dap.toggle_breakpoint() end, { silent = true }, "Add/Remove Breakpoint")
---nnoremap("<leader>dr", function() dapui.toggle({}) end, { silent = true }, "Open/Close Dap UI")
+nnoremap("<leader>dr", function() dapui.toggle({}) end, { silent = true }, "Open/Close Dap UI")
 nnoremap("<leader>dR", function() dap.run_last() end, { silent = true }, "Run Last")
---nnoremap("<leader>dk", function() dapui.eval() end, { silent = true }, "")
---nnoremap("<leader>dK", function() dapui.eval(vim.fn.input('Eval Expression: '), {}) end, { silent = true }, "")
+nnoremap("<leader>dk", function() dapui.eval() end, { silent = true }, "")
+nnoremap("<leader>dK", function() dapui.eval(vim.fn.input('Eval Expression: '), {}) end, { silent = true }, "")
 nnoremap("<Leader>dB", function() dap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end, { silent = true },
     "")
 nnoremap("<Leader>dp", function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
@@ -125,26 +124,25 @@ nnoremap("<leader>li", function() vim.cmd.Mason() end, { silent = true }, "Lsp I
 
 -- Snippets
 sinoremap("<c-k>", function() if ls.expand_or_jumpable() then ls.expand_or_jump() end end, { silent = true }, "")
-sinoremap("<C-j>", function() if ls.jumpable( -1) then ls.jump( -1) end end, { silent = true }, "")
+sinoremap("<C-j>", function() if ls.jumpable(-1) then ls.jump(-1) end end, { silent = true }, "")
 sinoremap("<C-l>", function() if ls.choice_active() then ls.change_choice(1) end end, { silent = true }, "")
 
 
-nnoremap("<leader><leader>s", function() vim.cmd.source("~/.config/nvim/after/plugin/luasnip.lua") end, { silent = true }
-    , "Load snippets")
-
--- Tests
---nnoremap('<leader>t', nil, nil, 'Tests')
---nnoremap('<leader>tt', function() phpunit.run() end)
---nnoremap('<leader>to', function() neotest.output_panel.toggle() end, nil, 'Panel Toggle')
---nnoremap('<leader>tr', function() neotest.run.run() end, nil, 'Start')
---nnoremap('<leader>tf', function() neotest.run.run(vim.fn.expand("%:@:p")) end, nil, 'Start Current File')
---nnoremap('<leader>tF', function() neotest.run.run(vim.fn.expand("%:p:h")) end, nil, 'Start Current Folder')
---nnoremap('<leader>td', function() neotest.run.run({ vim.fn.expand("%:@:p"), dap = true }) end, nil, 'Debug Current File')
---nnoremap('<leader>ts', function() neotest.run.stop() end, nil, 'Stop')
---nnoremap('<leader>tk', function() neotest.output.open() end, nil, 'Output')
---nnoremap('<leader>tt', function() neotest.summary.toggle() end, nil, 'Adapters')
+nnoremap("<leader><leader>s", function() vim.cmd.source("~/.config/nvim/after/plugin/luasnip.lua") end, { silent = true },
+"Load snippets")
 
 function LspKeyMap()
+    -- Tests
+    --nnoremap('<leader>t', nil, nil, 'Tests')
+    -- nnoremap('<leader>to', function() neotest.output_panel.toggle() end, nil, 'Panel Toggle')
+    -- nnoremap('<leader>tr', function() neotest.run.run() end, nil, 'Start')
+    -- nnoremap('<leader>tf', function() neotest.run.run(vim.fn.expand("%:@:p")) end, nil, 'Start Current File')
+    -- nnoremap('<leader>tF', function() neotest.run.run(vim.fn.expand("%:p:h")) end, nil, 'Start Current Folder')
+    -- nnoremap('<leader>td', function() neotest.run.run({ vim.fn.expand("%:@:p"), dap = true }) end, nil, 'Debug Current File')
+    -- nnoremap('<leader>ts', function() neotest.run.stop() end, nil, 'Stop')
+    -- nnoremap('<leader>tk', function() neotest.output.open() end, nil, 'Output')
+    -- nnoremap('<leader>tt', function() neotest.summary.toggle() end, nil, 'Adapters')
+
     -- General LSP config
     nnoremap("gd", function() vim.lsp.buf.definition() end, {}, "Definition")
     nnoremap("gD", function() vim.lsp.buf.declaration() end, {}, "Declaration")
