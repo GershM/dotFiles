@@ -1,10 +1,8 @@
 set -e fish_user_paths
-set -U GOROOT "/usr/local/go"
-set -U GOOS "darwin"
-set -U GOARCH "arm64"
-set -U GOPATH "/Users/gershmirson/projects/go"
-set -U fish_user_paths /opt/homebrew/bin /opt/homebrew/opt/llvm/bin $HOME/.bin  $HOME/.local/bin $GOPATH/bin $GOROOT/bin /usr/local/bin/ $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths 
+set -U fish_user_paths /opt/homebrew/bin /opt/homebrew/opt/llvm/bin $HOME/.bin  $HOME/.local/bin /usr/local/bin/ $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths  $HOME/.config/emacs/bina $GOPATH/bin
 
+set -x SHELL "/opt/homebrew/bin/fish"
+set -x NODE_OPTIONS "--openssl-legacy-provider"
 function fish_user_key_bindings
   # fish_default_key_bindings
   fish_vi_key_bindings
@@ -63,6 +61,7 @@ alias .5='cd ../../../../..'
 
 # vim and emacs
 alias vim='nvim'
+alias gvim='nvim --listen ~/.cache/nvim/godot.pipe .'
 
 # Colorize grep output (good for log files)
 alias grep='grep --color=auto'
