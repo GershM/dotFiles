@@ -1,6 +1,5 @@
 return {
     -- Colore Schema
-    { "ellisonleao/gruvbox.nvim" },
     {
         "norcalli/nvim-colorizer.lua",
         config = function()
@@ -9,8 +8,6 @@ return {
             require('colorizer').setup()
         end
     },
-    { "folke/tokyonight.nvim" },
-    {"arcticicestudio/nord-vim"},
     {
         "ray-x/starry.nvim",
         config = function()

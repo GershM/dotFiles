@@ -24,8 +24,6 @@ local autocmd_clear = vim.api.nvim_clear_autocmds
 local telescope_mapper = require "core.telescope.mappings"
 local handlers = require "core.lsp.handlers"
 
--- local ts_util = require "nvim-lsp-ts-utils"
-
 local custom_init = function(client)
     client.config.flags = client.config.flags or {}
     client.config.flags.allow_incremental_sync = true
@@ -34,7 +32,6 @@ end
 local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
 local augroup_codelens = vim.api.nvim_create_augroup("custom-lsp-codelens", { clear = true })
 local augroup_format = vim.api.nvim_create_augroup("custom-lsp-format", { clear = true })
--- local augroup_semantic = vim.api.nvim_create_augroup("custom-lsp-semantic", { clear = true })
 
 local autocmd_format = function(async, filter)
     vim.api.nvim_clear_autocmds { buffer = 0, group = augroup_format }
@@ -85,38 +82,43 @@ end
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
 updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
 updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
+updated_capabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true,
+}
 
 -- Completion configuration
 vim.tbl_deep_extend("force", updated_capabilities, require("cmp_nvim_lsp").default_capabilities())
 updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
+
 local custom_attach = function(client, bufnr)
     local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
     local signature_setup = {
-        bind = true,     -- This is mandatory, otherwise border config won't get registered.
+        bind = true, -- This is mandatory, otherwise border config won't get registered.
         handler_opts = {
             border = "rounded"
         }
     }
-    require "lsp_signature".on_attach(signature_setup, bufnr)     -- Note: add in lsp client on-attach
-    
+    require "lsp_signature".on_attach(signature_setup, bufnr) -- Note: add in lsp client on-attach
+
 
     buf_inoremap { "<c-s>", vim.lsp.buf.signature_help }
 
-    buf_nnoremap { "<space>t", "<cmd>Lspsaga term_toggle<CR>"  }
+    buf_nnoremap { "<space>t", "<cmd>Lspsaga term_toggle<CR>" }
 
     -- buf_nnoremap { "<space>cr", vim.lsp.buf.rename }
     -- buf_nnoremap { "<space>ca", vim.lsp.buf.code_action }
-    
-    buf_nnoremap { "<space>cr", "<cmd>Lspsaga rename<CR>"  }
-    buf_nnoremap { "<space>ca", "<cmd>Lspsaga code_action<CR>"  }
-    buf_nnoremap { "<space>ch", "<cmd>Lspsaga incoming_calls<CR>"  }
+
+    buf_nnoremap { "<space>cr", "<cmd>Lspsaga rename<CR>" }
+    buf_nnoremap { "<space>ca", "<cmd>Lspsaga code_action<CR>" }
+    buf_nnoremap { "<space>ch", "<cmd>Lspsaga incoming_calls<CR>" }
 
     buf_nnoremap { "gd", vim.lsp.buf.definition }
     buf_nnoremap { "gD", vim.lsp.buf.declaration }
     buf_nnoremap { "gT", vim.lsp.buf.type_definition }
     -- buf_nnoremap { "K", vim.lsp.buf.hover, { desc = "lsp:hover" } }
-     buf_nnoremap { "K", "<cmd>Lspsaga hover_doc<CR>" , { desc = "lsp:hover" } }
+    buf_nnoremap { "K", "<cmd>Lspsaga hover_doc<CR>", { desc = "lsp:hover" } }
     buf_nnoremap { "<space>k", "<cmd>Lspsaga peek_definition<CR>" }
 
     buf_nnoremap { "<space>gI", handlers.implementation }
@@ -152,6 +154,7 @@ local custom_attach = function(client, bufnr)
     -- Attach any filetype specific options to the client
     filetype_attach[filetype]()
 end
+
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 
 local servers = {
@@ -263,6 +266,9 @@ local servers = {
     intelephense = {
         on_attach = function(client, bufnr)
             custom_attach(client, bufnr)
+            if client.server_capabilities.inlayHintProvider then
+                vim.lsp.buf.inlay_hint(bufnr, true)
+            end
         end,
         stubs = {
             "apache", "bcmath", "bz2", "calendar", "com_dotnet", "Core", "ctype", "curl", "date", "dba", "dom",
@@ -337,18 +343,6 @@ end
 for server, config in pairs(servers) do
     setup_server(server, config)
 end
-
-require("null-ls").setup {
-    sources = {
-        -- require("null-ls").builtins.formatting.stylua,
-        -- require("null-ls").builtins.diagnostics.eslint,
-        -- require("null-ls").builtins.completion.spell,
-        -- require("null-ls").builtins.diagnostics.selene,
-        require("null-ls").builtins.formatting.prettierd,
-        require("null-ls").builtins.formatting.isort,
-        require("null-ls").builtins.formatting.black,
-    },
-}
 
 nmap { "<leader>cf", function() vim.lsp.buf.format() end }
 

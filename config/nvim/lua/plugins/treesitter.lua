@@ -1,5 +1,5 @@
 return {
-            { "nvim-treesitter/nvim-treesitter", build = "TSUpdate" },
-         {"nvim-treesitter/nvim-treesitter-context"},
+    { "nvim-treesitter/nvim-treesitter",        run = "TSUpdate" },
+    { "nvim-treesitter/nvim-treesitter-context" },
 
 }

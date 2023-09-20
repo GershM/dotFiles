@@ -1,8 +1,8 @@
 
 vim.opt.guicursor = ""
 
+vim.opt.termguicolors = true
 vim.opt.showmode = false
-
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
@@ -50,4 +50,8 @@ vim.g.border_chars = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
 
 vim.opt.list = true
 
-
+vim.opt.foldcolumn = "1"
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = -1
+vim.opt.foldenable = true
+vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]

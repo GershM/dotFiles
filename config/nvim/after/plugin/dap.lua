@@ -150,26 +150,33 @@ dap.adapters.php = {
     type = 'executable',
     command = 'php-debug-adapter',
 }
+
 local function setPhpEnvironments(php)
-    local envsList = {
-        ["root"] = "www",
-        ["develop"] = "www_develop",
-        ["switch"] = "www_switch",
-        ["task"] = "www_task",
-    }
-    for key, value in pairs(envsList) do
-        local item = {
-            type = 'php',
-            request = 'launch',
-            name = 'Docker: API Debug - ' .. key,
-            pathMappings = {
-                ['/var/envs/' .. value] = "${workspaceFolder}",
-            },
-            cwd = "${workspaceFolder}",
-            port = 9200,
-        }
-        table.insert(php, item)
+    local path = vim.loop.cwd()
+    if path == nil then
+        return
     end
+
+    local working_dir = string.match(path, "(www.*)")
+    if working_dir == nil then
+        return
+    end
+
+    local sName = vim.split(working_dir, "_")
+    local name = sName[2] or sName[1]
+
+    local item = {
+        type = 'php',
+        request = 'launch',
+        name = 'Docker ' .. name .. ': API Debug',
+        pathMappings = {
+            ['/var/envs/' .. working_dir] = "${workspaceFolder}",
+        },
+        cwd = "${workspaceFolder}",
+        port = 9200,
+    }
+    table.insert(php, item)
+
     return ret
 end
 

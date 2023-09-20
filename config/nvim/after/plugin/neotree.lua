@@ -1,3 +1,4 @@
+
 local nmap = require("core.keymap").nmap
 
 -- disable netrw at the very start of your init.lua (strongly advised)
@@ -18,7 +19,7 @@ require("nvim-tree").setup({
         -- side = "right"
     },
     renderer = {
-        group_empty = true,
+        group_empty = false,
     },
     filters = {
         dotfiles = true,

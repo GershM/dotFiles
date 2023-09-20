@@ -108,48 +108,6 @@ function M.builtin()
   require("telescope.builtin").builtin()
 end
 
-function M.git_files()
-  local path = vim.fn.expand "%:h"
-  if path == "" then
-    path = nil
-  end
-
-  local opts = themes.get_dropdown {
-    winblend = 5,
-    previewer = false,
-    shorten_path = false,
-
-    cwd = path,
-
-    layout_config = {
-      width = width,
-    },
-  }
-
-  require("telescope.builtin").git_files(opts)
-end
-
-function M.buffer_git_files()
-  require("telescope.builtin").git_files(themes.get_dropdown {
-    cwd = vim.fn.expand "%:p:h",
-    winblend = 10,
-    border = true,
-    previewer = false,
-    shorten_path = false,
-  })
-end
-
-function M.lsp_code_actions()
-  local opts = themes.get_dropdown {
-    winblend = 10,
-    border = true,
-    previewer = false,
-    shorten_path = false,
-  }
-
-  require("telescope.builtin").lsp_code_actions(opts)
-end
-
 function M.live_grep()
   require("telescope.builtin").live_grep {
     -- shorten_path = true,
@@ -281,22 +239,6 @@ function M.file_browser()
   }
 
   require("telescope").extensions.file_browser.file_browser(opts)
-end
-
-function M.git_status()
-  local opts = themes.get_dropdown {
-    winblend = 10,
-    border = true,
-    previewer = false,
-    shorten_path = false,
-  }
-
-  -- Can change the git icons using this.
-  -- opts.git_icons = {
-  --   changed = "M"
-  -- }
-
-  require("telescope.builtin").git_status(opts)
 end
 
 function M.git_commits()

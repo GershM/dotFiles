@@ -1,6 +1,9 @@
 local lualine = require('lualine')
 local navic = require("nvim-navic")
 
+vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text
+local git_blame = require('gitblame')
+
 local config = {
     options = {
         icons_enabled = true,
@@ -23,7 +26,8 @@ local config = {
     sections = {
         lualine_a = { 'mode' },
         lualine_b = { 'branch', 'diff', 'diagnostics' },
-        lualine_c = { 'filename', { navic.get_location, cond = navic.is_available }},
+        lualine_c = { 'filename', { navic.get_location, cond = navic.is_available },
+            { git_blame.get_current_blame_text, cond = git_blame.is_blame_text_available } },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' }

@@ -1,8 +1,13 @@
 return {
     -- LSP
-    { 'neovim/nvim-lspconfig',             config = function() require("core.lsp") end },
+    {
+        'neovim/nvim-lspconfig',
+        opts = { inlay_hints = { enabled = true }, },
+        config = function()
+            require("core.lsp")
+        end
+    },
     { 'williamboman/mason-lspconfig.nvim', dependencies = { 'williamboman/mason.nvim' } },
-    { "jay-babu/mason-null-ls.nvim" },
 
     { "hrsh7th/cmp-nvim-lsp" },
     { "hrsh7th/cmp-buffer" },
@@ -14,17 +19,11 @@ return {
     { "L3MON4D3/LuaSnip" },
     { "saadparwaiz1/cmp_luasnip" },
 
-    -- { "jose-elias-alvarez/nvim-lsp-ts-utils" },
-    { "jose-elias-alvarez/null-ls.nvim" },
     { "folke/neodev.nvim" },
 
     { "simrat39/inlay-hints.nvim",         config = function() require("core.lsp.inlay") end },
-    -- use { "Shatur/neovim-cmake" }
     {
         "glepnir/lspsaga.nvim",
-        opt = true,
-        branch = "main",
-        event = "LspAttach",
         config = function()
             require("lspsaga").setup({})
         end,
@@ -47,4 +46,11 @@ return {
         build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
     },
     { 'ray-x/lsp_signature.nvim' },
+
+    { 'folke/lsp-colors.nvim' },
+    {
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = require('core.trouble')
+    }
 }
