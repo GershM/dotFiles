@@ -83,8 +83,8 @@ local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
 updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
 updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
 updated_capabilities.textDocument.foldingRange = {
-  dynamicRegistration = false,
-  lineFoldingOnly = true,
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
 }
 
 -- Completion configuration
@@ -280,14 +280,26 @@ local servers = {
             "standard", "superglobals", "sysvmsg", "sysvsem", "sysvshm", "tidy", "tokenizer", "xml", "xmlreader",
             "xmlrpc", "xmlwriter", "xsl", "ZendOPcache", "zip", "zlib"
         },
+        format = {
+            enable = true,
+            braces = "k&r"
+        },
         environment = {
             shortOpenTag = true
         },
         completion = {
             fullyQualifyGlobalConstantsAndFunctions = true,
+            triggerParameterHints = true,
+        },
+        phpdoc = {
+            returnVoid = true,
+            textFormat = "snippet"
         },
         diagnostics = {
             enable = true,
+        },
+        client = {
+            disableInlayHints = false,
         },
     }
 }
@@ -319,7 +331,13 @@ require("mason").setup({
 })
 
 require("mason-lspconfig").setup {
-    ensure_installed = { "lua_ls", "tsserver", "intelephense", "gopls", "jsonls" },
+    ensure_installed = {
+        "lua_ls",
+        "tsserver",
+        "intelephense",
+        "gopls",
+        "jsonls",
+    },
 }
 
 local setup_server = function(server, config)
@@ -344,7 +362,8 @@ for server, config in pairs(servers) do
     setup_server(server, config)
 end
 
-nmap { "<leader>cf", function() vim.lsp.buf.format() end }
+-- nmap { "<leader>cf", function() vim.lsp.buf.format() end }
+nmap { "<leader>cf", function() vim.cmd.Format() end }
 
 return {
     on_init = custom_init,

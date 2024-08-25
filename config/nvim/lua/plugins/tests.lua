@@ -31,9 +31,12 @@ return {
                 return newVirtText
             end
             require("ufo").setup {
+                enable_get_fold_virt_text = false,
+                auto = false,
                 open_fold_hl_timeout = 150,
                 fold_virt_text_handler = handler,
-                close_fold_kinds = { 'imports', 'comment' },
+                enable_normal_mode_for_inputs = { 'imports', 'comment' },
+                disabled = { 'org' },
                 preview = {
                     win_config = {
                         border = { '', '─', '', '', '', '─', '', '' },
@@ -110,5 +113,18 @@ return {
                 },
             })
         end
+    },
+    {
+        "jackMort/ChatGPT.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("chatgpt").setup({ api_key = os.getenv("OPENAI_API_KEY") })
+        end,
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "nvim-lua/plenary.nvim",
+            "folke/trouble.nvim",
+            "nvim-telescope/telescope.nvim"
+        }
     }
 }

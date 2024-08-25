@@ -3,7 +3,8 @@ require("core.sets")
 require("core.lualine")
 require("core.require")
 
-vim.cmd.colorscheme("moonlight")
+-- vim.cmd.colorscheme("moonlight")
+vim.cmd.colorscheme("tokyonight")
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`

@@ -9,6 +9,7 @@ return {
         end
     },
     { 'lewis6991/gitsigns.nvim' },
+    { 'ibhagwan/fzf-lua' },
     { 'NeogitOrg/neogit' },
     { 'sindrets/diffview.nvim' },
 }

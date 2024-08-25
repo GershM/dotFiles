@@ -8,10 +8,10 @@ require("telescope").setup {
         file_ignore_patterns = { ".*node_modules/.*", ".*vendor/.*" },
         extensions = {
             fzf = {
-                fuzzy = true,       -- false will only do exact matching
+                fuzzy = true,                   -- false will only do exact matching
                 override_generic_sorter = true, -- override the generic sorter
-                override_file_sorter = true, -- override the file sorter
-                case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+                override_file_sorter = true,    -- override the file sorter
+                case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
                 -- the default case_mode is "smart_case"
             },
         },
@@ -186,18 +186,8 @@ require("telescope").setup {
             },
         },
 
-        -- frecency = {
-        --   workspaces = {
-        --     ["conf"] = "/home/tj/.config/nvim/",
-        --     ["nvim"] = "/home/tj/build/neovim",
-        --   },
-        -- },
     },
 }
-
--- pcall(require("telescope").load_extension, "cheat")
--- pcall(require("telescope").load_extension, "arecibo")
--- require("telescope").load_extension "flutter"
 
 _ = require("telescope").load_extension "dap"
 _ = require("telescope").load_extension "notify"
@@ -212,13 +202,3 @@ if vim.fn.executable "gh" == 1 then
     pcall(require("telescope").load_extension, "gh")
     pcall(require("telescope").load_extension, "octo")
 end
-
--- LOADED_FRECENCY = LOADED_FRECENCY or true
--- local has_frecency = true
--- if not LOADED_FRECENCY then
---   if not pcall(require("telescope").load_extension, "frecency") then
---     require "tj.telescope.frecency"
---   end
-
---   LOADED_FRECENCY = true
--- end

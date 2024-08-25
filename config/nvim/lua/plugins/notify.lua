@@ -36,7 +36,6 @@ return {
                     return
                 end
 
-                P(opts)
                 opts = opts or {}
                 msg = msg or {}
 
@@ -50,7 +49,7 @@ return {
             end
         end,
         cond = function()
-            if not pcall(require, "plenary") then
+            if not pcall(require, "plenary") and not pcall(require, "copilot") then
                 return false
             end
             return true

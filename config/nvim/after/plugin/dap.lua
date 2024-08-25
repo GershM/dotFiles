@@ -37,15 +37,8 @@ dap.configurations.lua = {
         type = "nlua",
         request = "attach",
         name = "Attach to running Neovim instance",
-        host = function()
-            return "127.0.0.1"
-        end,
-        port = function()
-            -- local val = tonumber(vim.fn.input('Port: '))
-            -- assert(val, "Please provide a port number")
-            local val = 54231
-            return val
-        end,
+        host = "127.0.0.1",
+        port = 54231
     },
 }
 
@@ -192,7 +185,23 @@ dap.configurations.php = {
     {
         type = 'php',
         request = 'launch',
-        name = 'Remote Proxy: API Debug',
+        name = 'Remote Proxy: API Debug (gena2)',
+        serverSourceRoot = "/var/www_gena2",
+        localSourceRoot = "${workspaceFolder}",
+        port = 9100,
+        cwd = "${workspaceFolder}",
+        proxy = {
+            host = "192.168.30.250",
+            port = 9101,
+            allowMultipleSessions = false,
+            enable = true,
+            key = "gena_nvim",
+        }
+    },
+    {
+        type = 'php',
+        request = 'launch',
+        name = 'Remote Proxy: API Debug (gena)',
         serverSourceRoot = "/var/www_gena",
         localSourceRoot = "${workspaceFolder}",
         port = 9100,

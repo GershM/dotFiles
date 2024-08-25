@@ -13,5 +13,5 @@ return {
         build = "npm install --legacy-peer-deps && npm run compile",
         tag = 'v1.74.1'
     },
-    { "lommix/godot.nvim"}
+    -- { "lommix/godot.nvim"}
 }

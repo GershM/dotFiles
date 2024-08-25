@@ -156,6 +156,3 @@ output.null = "#808080"
 # Use the -d option to reference a DSN.
 # Special characters in passwords and other strings can be escaped with URL encoding.
 [alias_dsn]
-dev = mysql://cwm@192.168.30.251:3306/cwm_devel_new
-tst = mysql://cwm@devel.cloudwm-tst.com:3306/cwm_devel
-local = mysql://cwm@localhost:3306/cwm_devel

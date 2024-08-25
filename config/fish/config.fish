@@ -1,8 +1,14 @@
 set -e fish_user_paths
-set -U fish_user_paths /opt/homebrew/bin /opt/homebrew/opt/llvm/bin $HOME/.bin  $HOME/.local/bin /usr/local/bin/ $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths  $HOME/.config/emacs/bina $GOPATH/bin
+set -U fish_user_paths /opt/homebrew/bin /opt/homebrew/opt/llvm/bin $HOME/.bin  $HOME/.local/bin /usr/local/bin/ $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths  /opt/homebrew/opt/mysql-client/bin $GOPATH/bin
 
+set -g -x OPENAI_API_KEY ""
 set -x SHELL "/opt/homebrew/bin/fish"
 set -x NODE_OPTIONS "--openssl-legacy-provider"
+set -x FZF_DEFAULT_OPTS '--height 40% --layout=reverse --border'
+
+set -Ux PYENV_ROOT $HOME/.pyenv
+fish_add_path $PYENV_ROOT/bin
+
 function fish_user_key_bindings
   # fish_default_key_bindings
   fish_vi_key_bindings
@@ -63,15 +69,28 @@ alias .5='cd ../../../../..'
 alias vim='nvim'
 alias gvim='nvim --listen ~/.cache/nvim/godot.pipe .'
 
+# elkCli
+# alias elkcli="python3.10 /Users/gershmirson/myProjects/elkcli/elkcli"
+
+alias brew="env PATH=(string replace (pyenv root)/shims '' \"\$PATH\") brew"
+
 # Colorize grep output (good for log files)
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
+alias ls="eza"
+
 # confirm before overwriting something
 alias cp="cp -i"
 alias mv='mv -i'
 alias rm='rm -i'
+
+alias projects='find ~/projects -name ".git" -type d  -exec dirname {} \; | fzf | read -l dir; and cd $dir'
+alias myProjects='find ~/myProjects -name ".git" -type d  -exec dirname {} \; | fzf | read -l dir; and cd $dir'
+
+alias omc='cat ~/.omclogin | fzf | read -d " " -l group  name ip user; and omclogin $group $name'
+alias historyExec='history | fzf| read -l h; and fish -c $h'
 
 starship init fish | source
 
